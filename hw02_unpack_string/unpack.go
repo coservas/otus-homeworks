@@ -14,12 +14,9 @@ func Unpack(input string) (string, error) {
 
 	for i, cur := range input {
 		isDigit := unicode.IsDigit(cur)
-		if i == 0 && isDigit {
-			return "", ErrInvalidString
-		}
-
 		isDigitPrev := unicode.IsDigit(prev)
-		if isDigitPrev && isDigit {
+
+		if (i == 0 && isDigit) || (isDigitPrev && isDigit) {
 			return "", ErrInvalidString
 		}
 
