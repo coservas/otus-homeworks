@@ -31,16 +31,15 @@ func GetWords(freqs []Freq) []string {
 }
 
 func Top10(text string) []string {
-	freqs := make([]Freq, 0)
 	words := strings.Fields(text)
-
 	if len(words) == 0 {
 		return nil
 	}
 
+	var freqs []Freq
 	for _, w := range words {
-		h, i := HasFreq(w, freqs)
-		if h {
+		has, i := HasFreq(w, freqs)
+		if has {
 			freqs[i].count++
 		} else {
 			freqs = append(freqs, Freq{w, 1})
@@ -55,5 +54,12 @@ func Top10(text string) []string {
 		return freqs[i].count > freqs[j].count
 	})
 
-	return GetWords(freqs[:10])
+	var length int
+	if len(freqs) > 10 {
+		length = 10
+	} else {
+		length = len(freqs)
+	}
+
+	return GetWords(freqs[:length])
 }

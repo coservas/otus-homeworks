@@ -79,4 +79,32 @@ func TestTop10(t *testing.T) {
 			require.Equal(t, expected, Top10(text))
 		}
 	})
+
+	t.Run("< 10 words", func(t *testing.T) {
+		require.Len(t, Top10("one two three"), 3)
+	})
+
+	t.Run("different register", func(t *testing.T) {
+		require.Len(t, Top10("Cat cat CAT caT"), 4)
+	})
+
+	t.Run("spaces only", func(t *testing.T) {
+		require.Len(t, Top10("   "), 0)
+	})
+
+	t.Run("register sequence", func(t *testing.T) {
+		require.Equal(t, []string{"Upper", "upper"}, Top10("upper Upper"))
+	})
+
+	t.Run("numbers sequence", func(t *testing.T) {
+		require.Equal(t, []string{"1", "5"}, Top10("5 1"))
+	})
+
+	t.Run("numbers with count sequence", func(t *testing.T) {
+		require.Equal(t, []string{"5", "1"}, Top10("5 1 5 1 5"))
+	})
+
+	t.Run("numbers with register sequence", func(t *testing.T) {
+		require.Equal(t, []string{"1", "5", "Upper", "upper"}, Top10("upper 5 1 Upper"))
+	})
 }
