@@ -21,10 +21,10 @@ func HasFreq(word string, freqs []Freq) (bool, int) {
 }
 
 func GetWords(freqs []Freq) []string {
-	var words []string
+	words := make([]string, len(freqs))
 
-	for _, f := range freqs {
-		words = append(words, f.word)
+	for i, f := range freqs {
+		words[i] = f.word
 	}
 
 	return words
