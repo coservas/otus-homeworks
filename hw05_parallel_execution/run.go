@@ -15,11 +15,16 @@ func Run(tasks []Task, n, m int) error {
 		return ErrErrorsLimitExceeded
 	}
 
+	if n <= 0 {
+		return errors.New("n <= 0")
+	}
+
 	c := make(chan Task)
 	var errCount int32
-	wg := sync.WaitGroup{}
 
+	wg := sync.WaitGroup{}
 	wg.Add(n)
+
 	for i := 0; i < n; i++ {
 		go func() {
 			defer wg.Done()
@@ -39,6 +44,7 @@ func Run(tasks []Task, n, m int) error {
 		}
 		c <- task
 	}
+
 	close(c)
 	wg.Wait()
 
