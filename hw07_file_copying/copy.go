@@ -4,6 +4,8 @@ import (
 	"errors"
 	"io"
 	"os"
+
+	"github.com/cheggaaa/pb/v3"
 )
 
 var (
@@ -42,9 +44,13 @@ func Copy(fromPath, toPath string, offset, limit int64) error {
 	dstFile, _ := os.Create(toPath)
 	defer dstFile.Close()
 
-	if _, err := io.CopyN(io.Writer(dstFile), io.Reader(srcFile), limit); err != nil {
+	bar := pb.Full.Start64(limit)
+
+	if _, err := io.CopyN(io.Writer(dstFile), bar.NewProxyReader(io.Reader(srcFile)), limit); err != nil {
 		return err
 	}
+
+	bar.Finish()
 
 	return nil
 }
