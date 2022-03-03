@@ -6,10 +6,6 @@ import (
 )
 
 func RunCmd(cmd []string, env Environment) (returnCode int) {
-	if len(cmd) < 1 {
-		return 255
-	}
-
 	cmdName := cmd[0]
 	command := exec.Command(cmdName, cmd[1:]...)
 
