@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"testing"
 
@@ -25,7 +24,7 @@ func TestReadDir(t *testing.T) {
 		expected := Environment{
 			"BAR":   EnvValue{Value: "bar", NeedRemove: false},
 			"EMPTY": EnvValue{Value: "", NeedRemove: false},
-			"FOO":   EnvValue{Value: fmt.Sprintf("   foo\nwith new line"), NeedRemove: false},
+			"FOO":   EnvValue{Value: "   foo\nwith new line", NeedRemove: false},
 			"HELLO": EnvValue{Value: "\"hello\"", NeedRemove: false},
 			"UNSET": EnvValue{Value: "", NeedRemove: true},
 		}
@@ -34,5 +33,4 @@ func TestReadDir(t *testing.T) {
 		require.Nil(t, err)
 		require.Equal(t, expected, actual)
 	})
-
 }
