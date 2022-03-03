@@ -6,7 +6,12 @@ import (
 )
 
 func RunCmd(cmd []string, env Environment) (returnCode int) {
-	command := exec.Command(cmd[0], cmd[1:]...)
+	if len(cmd) < 1 {
+		return 255
+	}
+
+	cmdName := cmd[0]
+	command := exec.Command(cmdName, cmd[1:]...)
 
 	command.Stdout = os.Stdout
 	command.Stdin = os.Stdin
